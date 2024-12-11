@@ -221,25 +221,30 @@ window.onload = function() {
 			document.getElementById("call").disabled = false;
 		});
 
-		phone.handle("registrationFailed", function () {
+		phone.handle("registrationFailed", function (reason) {
+			console.log("registrationFailed : " + reason);
 			phone.disconnect();
 		});
 
 		phone.handle("incoming", function (reason) {
+			console.log("incoming : " + reason);
 			document.getElementById("call").value = "Answer";
 		});
 
 		phone.handle("failed", function (reason) {
+			console.log("failed : " + reason);
 			document.getElementById("call").value = "Call";
 			document.getElementById("call").disabled = false;
 		});
 
 		phone.handle("ended", function (reason) {
+			console.log("ended : " + reason);
 			document.getElementById("call").value = "Call";
 			document.getElementById("call").disabled = document.getElementById("connect").value == "Connect";
 		});
 
 		phone.handle("streamAdded", function (stream) {
+			console.log("streamAdded : " + reason);
 			document.getElementById("media-views").appendChild(createMediaView(stream));
 
 			document.getElementById("call").value = "Hangup";
@@ -247,6 +252,7 @@ window.onload = function() {
 		});
 
 		phone.handle("streamRemoved", function (stream) {
+			console.log("streamRemoved : " + reason);
 			removeMediaView(document.getElementById("media-views"), stream);
 		});
 
