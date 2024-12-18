@@ -21,12 +21,13 @@
 let phone;
 
 window.onload = function() {
-	document.getElementById("accountId").placeholder = "WS_PHONE_B";
-	document.getElementById("accountName").value = "WS_PHONE_B";
-	document.getElementById("accountPassword").placeholder = "arachnoratchete";
+	document.getElementById("accountId").placeholder = "WS_PHONE_A";
+	document.getElementById("accountName").value = "WS_PHONE_A";
+	document.getElementById("accountPassword").placeholder = "spiderwrenche";
 	document.getElementById("accountHost").placeholder = "185.237.40.246";
 	document.getElementById("accountRegister").checked = true;
-	document.getElementById("extension").placeholder = "200";
+	document.getElementById("extension").placeholder = "246";
+
 
 	document.getElementById("connect").value = "Connect";
 	document.getElementById("connect").disabled = false;
@@ -197,8 +198,7 @@ window.onload = function() {
 								getValue("accountHost"),
 								document.getElementById("accountRegister").checked);
 
-		phone.handle("connected", function (data) {
-			console.log("connected : " + data);
+		phone.handle("connected", function () {
 			if (document.getElementById("accountRegister").checked &&
 				document.getElementById("connect").value != "Disconnect") {
 				document.getElementById("connect").value = "Registering";
@@ -209,45 +209,38 @@ window.onload = function() {
 			}
 		});
 
-		phone.handle("disconnected", function (data) {
-			console.log("disconnected : " + data);
+		phone.handle("disconnected", function () {
 			document.getElementById("connect").value = "Connect";
 			document.getElementById("connect").disabled = false;
 			document.getElementById("call").value = "Call";
 			document.getElementById("call").disabled = true;
 		});
 
-		phone.handle("registered", function (data) {
-			console.log("registered : " + data);
+		phone.handle("registered", function () {
 			document.getElementById("connect").value = "Disconnect";
 			document.getElementById("connect").disabled = false;
 			document.getElementById("call").disabled = false;
 		});
 
-		phone.handle("registrationFailed", function (reason) {
-			console.log("registrationFailed : " + reason);
+		phone.handle("registrationFailed", function () {
 			phone.disconnect();
 		});
 
 		phone.handle("incoming", function (reason) {
-			console.log("incoming : " + reason);
 			document.getElementById("call").value = "Answer";
 		});
 
 		phone.handle("failed", function (reason) {
-			console.log("failed : " + reason);
 			document.getElementById("call").value = "Call";
 			document.getElementById("call").disabled = false;
 		});
 
 		phone.handle("ended", function (reason) {
-			console.log("ended : " + reason);
 			document.getElementById("call").value = "Call";
 			document.getElementById("call").disabled = document.getElementById("connect").value == "Connect";
 		});
 
 		phone.handle("streamAdded", function (stream) {
-			console.log("streamAdded : " + reason);
 			document.getElementById("media-views").appendChild(createMediaView(stream));
 
 			document.getElementById("call").value = "Hangup";
@@ -255,7 +248,6 @@ window.onload = function() {
 		});
 
 		phone.handle("streamRemoved", function (stream) {
-			console.log("streamRemoved : " + reason);
 			removeMediaView(document.getElementById("media-views"), stream);
 		});
 
