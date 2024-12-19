@@ -88,6 +88,7 @@ CyberMegaPhone.prototype.connect = function () {
 		sockets: [ socket ],
 		uri: uri,
 		contact_uri: uri,
+		stun_servers: ["stun:stun.l.google.com:19302"],
 		username: this.name ? this.name : this.id,
 		password: this.password,
 		register: this.register,
